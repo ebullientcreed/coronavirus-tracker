@@ -1,7 +1,8 @@
 # Coronavirus-tracker
 A coronavirus tracker.
 
-#Angular app
+# Angular app
+
 install @angular/material in Angular applications for Material Design styled table using
  - ng add @angular/material
  
