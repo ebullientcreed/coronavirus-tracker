@@ -2,8 +2,7 @@
 A coronavirus tracker.
 Frontend - Angular
 # Angular app
-First install npm and node js.
-Run- npm install
+First install npm and node js.Run npm install.
 This installs most of the modules, but configuring this angular app requires installing few more node modules as listed below
   Install @angular/material in Angular applications for Material Design styled table using
    - ng add @angular/material
