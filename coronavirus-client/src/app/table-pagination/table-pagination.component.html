@@ -1,0 +1,43 @@
+<div class="mat-elevation-z6 ">
+    <div class="search-filter" fxLayout fxLayoutAlign="center center">
+        <mat-form-field fxFlex="40%">
+            <input matInput type="text" (keyup)="doFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+        <!-- <ng-container matColumnDef="number">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="lead "> Number </th>
+            <td mat-cell *matCellDef="let element" class="lead "> {{element.number}} </td>
+        </ng-container> -->
+
+        <!-- country Column -->
+        <ng-container matColumnDef="country">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="lead "> Country </th>
+            <td mat-cell *matCellDef="let element" class="lead "> {{element.country}} </td>
+        </ng-container>
+
+        <!-- latestTotalCases Column -->
+        <ng-container matColumnDef="latestTotalCases">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="lead "> Total Cases </th>
+            <td mat-cell *matCellDef="let element" class="lead "> {{element.latestTotalCases}} </td>
+        </ng-container>
+
+        <!-- latestDeathTotalCases Column -->
+        <ng-container matColumnDef="latestTotalDeathCases">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="lead "> Total Deaths </th>
+            <td mat-cell *matCellDef="let element" class="lead "> {{element.latestTotalDeathCases}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="lead "></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="lead "></tr>
+    </table>
+
+    <mat-paginator class="lead " [pageSizeOptions]="[5, 10, 20, 30, 40, 50]" showFirstLastButtons></mat-paginator>
+</div>
+
+
+<!-- Copyright 2019 Google LLC. All Rights Reserved.
+      Use of this source code is governed by an MIT-style license that
+      can be found in the LICENSE file at http://angular.io/license -->

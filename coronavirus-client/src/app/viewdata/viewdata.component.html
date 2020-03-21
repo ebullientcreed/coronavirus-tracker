@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+
+<head>
+    <title>Coronavirus Tracker </title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div>
+            <h1 class="display-2 headtitle ">Coronavirus Tracker
+                <fa-icon [icon]="faFileMedical"></fa-icon>
+            </h1>
+            <p class="lead " style="text-align: center;">This application lists the current number of confirmed and death cases across the globe </p>
+        </div>
+
+        <div class=" jumbotron alert alert-warning">
+            <p class="display-4  " style="float:right;">{{Datas[0]}}
+                <fa-icon [icon]="faCheckCircle"></fa-icon>
+                {{Datas[1]}}
+                <fa-icon [icon]="faChartLine" (click)="loadChart()"></fa-icon>
+            </p>
+            <p class="lead ">Total confirmed cases as of today and number of cases increased from previous day </p>
+            <!-- <fusioncharts width="700" height="400" type="line" [dataSource]="chartSource">
+            </fusioncharts> -->
+            <template #chartcontainer></template>
+        </div>
+
+
+        <div class=" jumbotron alert alert-danger">
+
+            <h3 class="display-4 " style="float:right;">{{DeathDatas[0]}}
+                <fa-icon [icon]=" faUserSlash "></fa-icon>
+                {{DeathDatas[1]}}
+                <fa-icon [icon]="faChartLine " (click)="loadDeadChart() "></fa-icon>
+            </h3>
+            <p class="lead ">Total death cases as of today and number of cases increased from the previous day </p>
+            <template #deadchartcontainer></template>
+        </div>
+
+        <app-table-pagination></app-table-pagination>
+        <!-- <table class="table table-striped ">
+            <tr>
+                <th>Number</th>
+                <th>Country</th>
+                <th>Total cases reported</th>
+                <th>Total death cases reported</th>
+            </tr>
+            <tr *ngFor="let data of Result ">
+                <td>{{data.number}}</td>
+                <td>{{data.country}}</td>
+                <td>{{data.latestTotalCases}}</td>
+                <td>{{data.latestTotalDeathCases}}</td>
+            </tr>
+        </table> -->
+
+
+    </div>
+    <app-corona-footer></app-corona-footer>
+</body>
+
+</html>
