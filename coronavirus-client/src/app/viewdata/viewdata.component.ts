@@ -19,8 +19,6 @@ export class ViewdataComponent implements OnInit {
   Datas: any;
   Result: any;
   DeathDatas: any;
-  timeSeriesData: any;
-  chartSource:any;
   flag= true;deadflag= true;
   faFileMedical=faFileMedical;
   faCheckCircle=faCheckCircle;
@@ -44,31 +42,7 @@ export class ViewdataComponent implements OnInit {
     result.subscribe(data=>{
       this.Result=data;
     }); 
-    let getTimeSeriesResult=this.service.getTimeSeriesResult();
-    getTimeSeriesResult.subscribe(data=>{
-      this.timeSeriesData=data;
-      console.log(this.timeSeriesData);
-      this.chartSource = {
-        chart: {
-          //Set the chart caption
-          caption: "Number of Cases in the last 30 days",
-          //Set the chart subcaption
-          // subCaption: "In MMbbl = One Million barrels",
-          //Set the x-axis name
-          xAxisName: "Date",
-          //Set the y-axis name
-          yAxisName: "Number of cases",
-          //numberSuffix: "K",
-          //Set the theme for your chart
-          theme: "fusion",
-          width: "100%",
-          height: "100%",
-        },
-        // Chart Data - from step 2
-        data: this.timeSeriesData
-      };
-    }); 
-  }
+   }
   loadChart() {   
     console.log("clicked"); 
     if(!this.flag){     
