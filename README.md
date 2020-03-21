@@ -4,7 +4,7 @@ Note that the data is taken from the data repository https://github.com/CSSEGISa
 This application is made using Angular8 in the frontend and Spring Boot2 in the backend.
 ![Springboot-Angular](images/springboot-angular.png)
 # Spring Boot App
-Spring Boot application is developed to build RESTful APIs while leveraging the stackless features of REST.
+Spring Intializr is used to create the project with spring web dependency. This project is imported as a maven project. Spring Boot application is developed to build RESTful APIs while leveraging the stackless features of REST.
 # Angular app
 First install npm and node js.Run npm install.
 This installs most of the modules, but configuring this angular app requires installing few more node modules as listed below.
