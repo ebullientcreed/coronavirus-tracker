@@ -3,6 +3,8 @@ A coronavirus tracker. It is a portal which shows the number of cases of coronav
 Note that the data is taken from the data repository https://github.com/CSSEGISandData/COVID-19.
 This application is made using Angular8 in the frontend and Spring Boot2 in the backend.
 ![Springboot-Angular](images/springboot-angular.png)
+# Spring Boot App
+Spring Boot application is developed to build RESTful APIs while leveraging the stackless features of REST.
 # Angular app
 First install npm and node js.Run npm install.
 This installs most of the modules, but configuring this angular app requires installing few more node modules as listed below.
