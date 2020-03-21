@@ -1,5 +1,6 @@
 # Coronavirus-tracker
 A coronavirus tracker.
+Note that the data is taken from the data repository https://github.com/CSSEGISandData/COVID-19.
 This application is made using Angular8 in the frontend and Spring Boot2 in the backend.
 ![Springboot-Angular](images/springboot-angular.png)
 # Angular app
