@@ -1,5 +1,5 @@
 # Coronavirus-tracker
-A coronavirus tracker. It is a portal which shows the number of cases of coronavirus worldwide. The data for each country is processod and showed too.
+A coronavirus tracker. It is a portal which shows the number of cases of coronavirus worldwide.
 Note that the data is taken from the data repository https://github.com/CSSEGISandData/COVID-19.
 This application is made using Angular8 in the frontend and Spring Boot2 in the backend.
 ![Springboot-Angular](images/springboot-angular.png)
