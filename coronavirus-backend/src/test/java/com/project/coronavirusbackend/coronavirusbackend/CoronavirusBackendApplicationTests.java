@@ -67,29 +67,5 @@ class CoronavirusBackendApplicationTests {
 		HttpResponse<String> httpresponse=client.send(request, HttpResponse.BodyHandlers.ofString());
 		Assertions.assertNotEquals(0, httpresponse.toString().length());
 	}
-//	@Test
-//	void fetchResultTest() throws IOException, InterruptedException {
-//		List<CountryStatistics> confirmedList=new ArrayList<>();
-//		List<deathCountryStatistics> deathList=new ArrayList<>();
-//		CountryStatistics cs=new CountryStatistics();
-//		cs.setCountry("USA");
-//		cs.setLatestTotalCases(1000);
-//		cs.setChangeFromPrevDay(100);
-//		deathCountryStatistics dcs=new deathCountryStatistics();
-//		dcs.setCountry("USA");
-//		dcs.setLatestTotalDeathCases(120);
-//		dcs.setDeathChangeFromPrevDay(10);
-//		confirmedList.add(cs);
-//		deathList.add(dcs);
-//		resultStatistics rs=new resultStatistics();
-//		rs.setNumber(1);
-//		rs.setCountry("USA");
-//		rs.setLatestTotalCases(1000);
-//		rs.setLatestTotalDeathCases(120);
-//		List<resultStatistics> resultList=new ArrayList<>();
-//		resultList.add(rs);
-//		coronavirusdataservice.fetchResult(confirmedList, deathList);
-//		Assertions.assertEquals(resultList,coronavirusdataservice.getresultCountry());
-//	}	
 
 }
