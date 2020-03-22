@@ -32,16 +32,7 @@ import com.project.coronavirusbackend.coronavirusbackend.models.timeSeriesData;
 
 
 @Service
-public class CoronavirusDataService {
-	public String getRawDataUrl() {
-		return rawDataUrl;
-	}
-	public List<LocationStatistics> getAllStatList() {
-		return allStatList;
-	}
-	public List<CountryStatistics> getAllCountryStat() {
-		return allCountryStat;
-	}
+public class CoronavirusDataService {	
 	private String rawDataUrl="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv";
 	private String rawDataDeathUrl= "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv";
 	private  List<LocationStatistics> allStatList=new ArrayList<>();
@@ -49,6 +40,25 @@ public class CoronavirusDataService {
 	private  List<deathLocationStatistics> allDeathStatList=new ArrayList<>();
 	private  List<deathCountryStatistics> allDeathCountryStat=new ArrayList<>();
 	private  List<resultStatistics> resultCountry=new ArrayList<>();
+	private List<timeSeriesData> timeData=new ArrayList<>();
+	private HashMap<String,Integer> confirmedTimeData=new LinkedHashMap<>();
+	private HashMap<String,Integer> deadTimeData=new LinkedHashMap<>();
+	public String getRawDataUrl() {
+		return rawDataUrl;
+	}
+	public String getRawDataDeathUrl() {
+		return rawDataDeathUrl;
+	}
+	
+	public List<LocationStatistics> getAllStatList() {
+		return allStatList;
+	}
+	public void setAllStatList(List<LocationStatistics> allStatList) {
+		this.allStatList = allStatList;
+	}
+	public List<CountryStatistics> getAllCountryStat() {
+		return allCountryStat;
+	}
 	public List<resultStatistics> getresultCountry() {		
 		return resultCountry;
 	}
@@ -66,12 +76,7 @@ public class CoronavirusDataService {
 	}
 	public HashMap<String, Integer> getDeadTimeData() {
 		return deadTimeData;
-	}
-	private List<timeSeriesData> timeData=new ArrayList<>();
-	private HashMap<String,Integer> confirmedTimeData=new LinkedHashMap<>();
-	private HashMap<String,Integer> deadTimeData=new LinkedHashMap<>();
-	
-	
+	}	
 	//Execute after the creation of service, after instance of class run this method
 	@PostConstruct
 	//Run of method on regular basis, it runs on every second by setting cron variable as below
@@ -128,13 +133,8 @@ public class CoronavirusDataService {
 		}
 		this.allCountryStat=newCountryStat;
 		fetchCoronaDeathData();
-		fetchResult();
+		fetchResult(getAllCountryStat(),getAllDeathCountryStat());
 	}
-//	//Execute after the creation of service, after instance of class run this method
-//	@PostConstruct
-//	//Run of method on regular basis, it runs on every second by setting cron variable as below
-//	//second minute hr . . .
-//	@Scheduled(cron="* * 1 * * *")
 	public void fetchCoronaDeathData() throws NumberFormatException,IOException, InterruptedException {
 		//create http client
 		//and use http request to build builderpattern providing location
@@ -186,14 +186,9 @@ public class CoronavirusDataService {
 		}
 		this.allDeathCountryStat=newCountryStat;
 	}
-//	//Execute after the creation of service, after instance of class run this method
-//	@PostConstruct
-//	//Run of method on regular basis, it runs on every second by setting cron variable as below
-//	//second minute hr . . .
-//	@Scheduled(cron="* * 1 * * *")
-	public void fetchResult() throws IOException, InterruptedException {
-		List<CountryStatistics> confirmedList=getAllCountryStat();
-		List<deathCountryStatistics> deathList=getAllDeathCountryStat();
+	public void fetchResult(List<CountryStatistics> confirmedList,List<deathCountryStatistics> deathList) throws IOException, InterruptedException {
+		//List<CountryStatistics> confirmedList=getAllCountryStat();
+		//List<deathCountryStatistics> deathList=getAllDeathCountryStat();
 		List<resultStatistics> resultList=new ArrayList<>();
 		for(int i=0;i<confirmedList.size();i++) {
 			if(confirmedList.get(i).getCountry().equals(deathList.get(i).getCountry())) {
