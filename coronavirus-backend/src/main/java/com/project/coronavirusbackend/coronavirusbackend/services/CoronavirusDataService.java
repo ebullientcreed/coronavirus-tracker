@@ -25,10 +25,10 @@ import org.springframework.stereotype.Service;
 
 import com.project.coronavirusbackend.coronavirusbackend.models.CountryStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.models.LocationStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.deathCountryStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.deathLocationStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.resultStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.timeSeriesData;
+import com.project.coronavirusbackend.coronavirusbackend.models.DeathCountryStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.DeathLocationStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.ResultStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.TimeSeriesData;
 
 
 @Service
@@ -37,10 +37,10 @@ public class CoronavirusDataService {
 	private String rawDataDeathUrl= "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv";
 	private  List<LocationStatistics> allStatList=new ArrayList<>();
 	private  List<CountryStatistics> allCountryStat=new ArrayList<>();
-	private  List<deathLocationStatistics> allDeathStatList=new ArrayList<>();
-	private  List<deathCountryStatistics> allDeathCountryStat=new ArrayList<>();
-	private  List<resultStatistics> resultCountry=new ArrayList<>();
-	private List<timeSeriesData> timeData=new ArrayList<>();
+	private  List<DeathLocationStatistics> allDeathStatList=new ArrayList<>();
+	private  List<DeathCountryStatistics> allDeathCountryStat=new ArrayList<>();
+	private  List<ResultStatistics> resultCountry=new ArrayList<>();
+	private List<TimeSeriesData> timeData=new ArrayList<>();
 	private HashMap<String,Integer> confirmedTimeData=new LinkedHashMap<>();
 	private HashMap<String,Integer> deadTimeData=new LinkedHashMap<>();
 	public String getRawDataUrl() {
@@ -59,16 +59,16 @@ public class CoronavirusDataService {
 	public List<CountryStatistics> getAllCountryStat() {
 		return allCountryStat;
 	}
-	public List<resultStatistics> getresultCountry() {		
+	public List<ResultStatistics> getresultCountry() {		
 		return resultCountry;
 	}
-	public List<deathLocationStatistics> getAllDeathStatList() {
+	public List<DeathLocationStatistics> getAllDeathStatList() {
 		return allDeathStatList;
 	}
-	public List<deathCountryStatistics> getAllDeathCountryStat() {
+	public List<DeathCountryStatistics> getAllDeathCountryStat() {
 		return allDeathCountryStat;
 	}
-	public List<timeSeriesData> getTimeData() {
+	public List<TimeSeriesData> getTimeData() {
 		return timeData;
 	}
 	public HashMap<String, Integer> getConfirmedTimeData() {
@@ -92,12 +92,13 @@ public class CoronavirusDataService {
 		HttpRequest request=HttpRequest.newBuilder()
 				.uri(URI.create(rawDataUrl))
 				.build();
-		//send response ,returning htpp response as string
+		//send response ,returning http response as string
 		HttpResponse<String> httpresponse=client.send(request, HttpResponse.BodyHandlers.ofString());
 		//System.out.println(httpresponse.body());
 		//using a csv library from apache commons to read csv body
 		StringReader csvBReader=new StringReader(httpresponse.body());
 		Iterable<CSVRecord> records = CSVFormat.DEFAULT.withFirstRecordAsHeader().parse(csvBReader);
+		//extracting the headers from the records
 		Set<String> headers = records.iterator().next().toMap().keySet();
 		String heads[]=new String[headers.size()];
 		int i=0;
@@ -105,14 +106,18 @@ public class CoronavirusDataService {
 			heads[i]=head;
 			i++;
 		}
+		// updating the time data map with the dates(last 31 days) from the headers  and assigning 0 for each date
 		for(int j=(headers.size()-31);j<headers.size();j++) {
 			newTimeData.put(heads[j],0);
 		}		
 		for (CSVRecord record : records) {
+			//for each record updating the value for each dates
 			for(int k=(record.size()-31);k<record.size();k++) {
 				newTimeData.put(heads[k],newTimeData.getOrDefault(heads[k],0)+Integer.parseInt(record.get(k)));
 			}
-			LocationStatistics locStat=new LocationStatistics();			
+			//Creating an object of locationstatistics class
+			LocationStatistics locStat=new LocationStatistics();
+			//setting the values from record datas
 		    locStat.setState(record.get("Province/State"));
 		    locStat.setCountry(record.get("Country/Region"));		    
 		    int latestCases=Integer.parseInt(record.get(record.size()-1));
@@ -120,11 +125,13 @@ public class CoronavirusDataService {
 		    locStat.setLatestTotalCases(latestCases);
 		    locStat.setChangeFromPrevDay(latestCases-prevDayCases);
 		    newStatList.add(locStat);
+		    //accumulating the data for each country and updating each country data
 		    newCountryStatMap.put(record.get("Country/Region"),newCountryStatMap.getOrDefault(record.get("Country/Region"), 0)+latestCases);		    
 		}
 		this.allStatList=newStatList;
 		this.confirmedTimeData=newTimeData;
 		List<CountryStatistics> newCountryStat=new ArrayList<>();
+		//for each country data, create countrystatics object and make a list for each country 
 		for(String country:newCountryStatMap.keySet()) {
 			CountryStatistics countStat=new CountryStatistics();
 			countStat.setCountry(country);
@@ -132,13 +139,15 @@ public class CoronavirusDataService {
 			newCountryStat.add(countStat);
 		}
 		this.allCountryStat=newCountryStat;
+		//invoke this method to update the death data
 		fetchCoronaDeathData();
+		//finally the result method to get the combined list of confirmed and death cases
 		fetchResult(getAllCountryStat(),getAllDeathCountryStat());
 	}
 	public void fetchCoronaDeathData() throws NumberFormatException,IOException, InterruptedException {
 		//create http client
 		//and use http request to build builderpattern providing location
-		List<deathLocationStatistics> newStatList=new ArrayList<>();
+		List<DeathLocationStatistics> newStatList=new ArrayList<>();
 		TreeMap<String,Integer> newCountryStatMap=new TreeMap<>();
 		HashMap<String,Integer> newdeadTimeData=new LinkedHashMap<>();
 		HttpClient client=HttpClient.newHttpClient();
@@ -158,14 +167,17 @@ public class CoronavirusDataService {
 			heads[i]=head;
 			i++;
 		}
+		// updating the time data map with the dates(last 31 days) from the headers and assigning 0 for each date
 		for(int j=(headers.size()-31);j<headers.size();j++) {
 			newdeadTimeData.put(heads[j],0);
 		}	
 		for (CSVRecord record : records) {
+			//for each record updating the value for each dates
 			for(int k=(record.size()-31);k<record.size();k++) {
 				newdeadTimeData.put(heads[k],newdeadTimeData.getOrDefault(heads[k],0)+Integer.parseInt(record.get(k)));
-			}
-			deathLocationStatistics locStat=new deathLocationStatistics();
+			}//Creating an object of deathLocationStatistics class
+			//and setting the values from record datas
+			DeathLocationStatistics locStat=new DeathLocationStatistics();
 		    locStat.setState(record.get("Province/State"));
 		    locStat.setCountry(record.get("Country/Region"));		    
 		    int latestCases=Integer.parseInt(record.get(record.size()-1));
@@ -173,26 +185,27 @@ public class CoronavirusDataService {
 		    locStat.setLatestTotalCases(latestCases);
 		    locStat.setChangeFromPrevDay(latestCases-prevDayCases);
 		    newStatList.add(locStat);
+		  //accumulating the data for each country and updating each country data
 		    newCountryStatMap.put(record.get("Country/Region"),newCountryStatMap.getOrDefault(record.get("Country/Region"), 0)+latestCases);		    
 		}
 		this.allDeathStatList=newStatList;
 		this.deadTimeData=newdeadTimeData;
-		List<deathCountryStatistics> newCountryStat=new ArrayList<>();
+		List<DeathCountryStatistics> newCountryStat=new ArrayList<>();
+		//for each country data, create deathcountrystatics object and make a list for each country 
 		for(String country:newCountryStatMap.keySet()) {
-			deathCountryStatistics countStat=new deathCountryStatistics();
+			DeathCountryStatistics countStat=new DeathCountryStatistics();
 			countStat.setCountry(country);
 			countStat.setLatestTotalDeathCases(newCountryStatMap.get(country));
 			newCountryStat.add(countStat);
 		}
 		this.allDeathCountryStat=newCountryStat;
 	}
-	public void fetchResult(List<CountryStatistics> confirmedList,List<deathCountryStatistics> deathList) throws IOException, InterruptedException {
-		//List<CountryStatistics> confirmedList=getAllCountryStat();
-		//List<deathCountryStatistics> deathList=getAllDeathCountryStat();
-		List<resultStatistics> resultList=new ArrayList<>();
+	public void fetchResult(List<CountryStatistics> confirmedList,List<DeathCountryStatistics> deathList) throws IOException, InterruptedException {
+		List<ResultStatistics> resultList=new ArrayList<>();
 		for(int i=0;i<confirmedList.size();i++) {
+			//checks for each list having the same country, resultstatitics is created and total confirmed and dead updated
 			if(confirmedList.get(i).getCountry().equals(deathList.get(i).getCountry())) {
-				resultStatistics rs=new resultStatistics();				
+				ResultStatistics rs=new ResultStatistics();				
 				rs.setNumber(i+1);
 				rs.setCountry(confirmedList.get(i).getCountry());
 				rs.setLatestTotalCases(confirmedList.get(i).getLatestTotalCases());

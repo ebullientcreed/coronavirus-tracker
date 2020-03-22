@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.coronavirusbackend.coronavirusbackend.models.ChartData;
 import com.project.coronavirusbackend.coronavirusbackend.models.CountryStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.models.LocationStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.deathCountryStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.deathLocationStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.resultStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.DeathCountryStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.DeathLocationStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.ResultStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.services.CoronavirusDataService;
 
 @RestController
@@ -48,7 +48,7 @@ public class HomeController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<Object> getDeathData(){
 		List<Object> resultList=new ArrayList<Object>();
-		List<deathLocationStatistics> allTotal=coronaDataService.getAllDeathStatList();
+		List<DeathLocationStatistics> allTotal=coronaDataService.getAllDeathStatList();
 		int totalCases=allTotal.stream().mapToInt(stat->stat.getLatestTotalCases()).sum();
 		int totalPrevCases=allTotal.stream().mapToInt(stat->stat.getChangeFromPrevDay()).sum();
 		//resultList.add(coronaDataService.getAllStatList());
@@ -59,15 +59,15 @@ public class HomeController {
 	}
 	@GetMapping("/getCountryDeathData")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public List<deathCountryStatistics> countryDeathData(Model model){
-		List<deathCountryStatistics> resultList=new ArrayList<deathCountryStatistics>();		
+	public List<DeathCountryStatistics> countryDeathData(Model model){
+		List<DeathCountryStatistics> resultList=new ArrayList<DeathCountryStatistics>();		
 		resultList.addAll(coronaDataService.getAllDeathCountryStat());
 		return resultList;
 	}
 	@GetMapping("/getResult")
 	@CrossOrigin(origins = "http://localhost:4200")
-	public List<resultStatistics> resultData(){
-		List<resultStatistics> resultList=new ArrayList<resultStatistics>();		
+	public List<ResultStatistics> resultData(){
+		List<ResultStatistics> resultList=new ArrayList<ResultStatistics>();		
 		resultList.addAll(coronaDataService.getresultCountry());
 		return resultList;
 	}

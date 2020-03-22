@@ -22,8 +22,8 @@ import org.junit.jupiter.api.Assertions.*;
 
 import com.project.coronavirusbackend.coronavirusbackend.models.CountryStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.models.LocationStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.deathCountryStatistics;
-import com.project.coronavirusbackend.coronavirusbackend.models.resultStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.DeathCountryStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.ResultStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.services.CoronavirusDataService;
 
 @ExtendWith(SpringExtension.class)

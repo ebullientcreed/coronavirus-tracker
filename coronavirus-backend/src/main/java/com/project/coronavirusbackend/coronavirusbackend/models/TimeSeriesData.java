@@ -1,6 +1,6 @@
 package com.project.coronavirusbackend.coronavirusbackend.models;
 
-public class timeSeriesData {
+public class TimeSeriesData {
 	private String onDate;
 	private int totalConfirmed;
 	public String getOnDate() {

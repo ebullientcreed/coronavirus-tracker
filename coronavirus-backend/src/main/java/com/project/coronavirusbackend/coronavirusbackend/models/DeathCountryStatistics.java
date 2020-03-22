@@ -1,6 +1,6 @@
 package com.project.coronavirusbackend.coronavirusbackend.models;
 
-public class deathCountryStatistics {
+public class DeathCountryStatistics {
 	private String deathcountry;
 	private int latestTotalDeathCases;
 	private int  deathChangeFromPrevDay;

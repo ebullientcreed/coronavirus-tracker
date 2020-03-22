@@ -1,25 +1,18 @@
 package com.project.coronavirusbackend.coronavirusbackend.models;
 
-public class deathLocationStatistics {
-	private String state;
+public class ResultStatistics {
+	private int number;	
 	private String country;
 	private int latestTotalCases;
-	private int  changeFromPrevDay;
-	
-	public int getChangeFromPrevDay() {
-		return changeFromPrevDay;
+	private int latestTotalDeathCases;
+	public int getNumber() {
+		return number;
 	}
-	public void setChangeFromPrevDay(int changeFromPrevDay) {
-		this.changeFromPrevDay = changeFromPrevDay;
+	public void setNumber(int number) {
+		this.number = number;
 	}
 	public String getCountry() {
 		return country;
-	}
-	public String getState() {
-		return state;
-	}
-	public void setState(String state) {
-		this.state = state;
 	}
 	public void setCountry(String country) {
 		this.country = country;
@@ -29,5 +22,11 @@ public class deathLocationStatistics {
 	}
 	public void setLatestTotalCases(int latestTotalCases) {
 		this.latestTotalCases = latestTotalCases;
+	}
+	public int getLatestTotalDeathCases() {
+		return latestTotalDeathCases;
+	}
+	public void setLatestTotalDeathCases(int latestTotalDeathCases) {
+		this.latestTotalDeathCases = latestTotalDeathCases;
 	}
 }
