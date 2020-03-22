@@ -90,7 +90,6 @@ class CoronavirusBackendApplicationTests {
 //		resultList.add(rs);
 //		coronavirusdataservice.fetchResult(confirmedList, deathList);
 //		Assertions.assertEquals(resultList,coronavirusdataservice.getresultCountry());
-//	}
-	
+//	}	
 
 }
