@@ -19,7 +19,7 @@ This installs most of the modules, but configuring this angular app requires ins
    - npm install @fortawesome/angular-fontawesome
    - npm install @fortawesome/fontawesome-svg-core
 
-References
+# References
 - https://github.com/CSSEGISandData/COVID-19
 - https://www.fusioncharts.com
 - https://material.angular.io
