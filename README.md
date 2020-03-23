@@ -21,6 +21,7 @@ This installs most of the modules, but configuring this angular app requires ins
 
 # References
 - https://github.com/CSSEGISandData/COVID-19
+- https://spring.io/guides/gs/scheduling-tasks/
 - https://www.fusioncharts.com
 - https://material.angular.io
 - https://commons.apache.org
