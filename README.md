@@ -26,4 +26,4 @@ This installs most of the modules, but configuring this angular app requires ins
 - https://commons.apache.org
 - https://getbootstrap.com/
 - https://junit.org/junit5/docs/current/user-guide/
-- https://www.youtube.com/user/koushks
+- https://www.youtube.com/
