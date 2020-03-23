@@ -1,5 +1,5 @@
 # Coronavirus-tracker
-Coronavirus is a rapidly spreading outbreak and a pandemic. This coronavirus tracker helps display the number of confirmed cases, the number of deaths and the details of countries affected globally. Not having to go through a lot of options this tracker makes it easy by providing information of the results monitored timely in an elaborate way from the data repository.
+Coronavirus is a rapidly spreading outbreak and a pandemic. This coronavirus tracker helps display the number of confirmed cases, the number of deaths, the number of recoveries and the details of countries affected globally. Not having to go through a lot of options this tracker makes it easy by providing information of the results monitored timely in an elaborate way from the data repository.
 Note that the data is taken from the data repository by by the Johns Hopkins University Center for Systems Science and Engineering https://github.com/CSSEGISandData/COVID-19.
 This application is made using Angular8 in the frontend and Spring Boot2 in the backend.
 ![Springboot-Angular](images/springboot-angular.png)
