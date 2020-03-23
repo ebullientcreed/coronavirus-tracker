@@ -18,7 +18,7 @@
 
         <div class=" jumbotron alert alert-warning">
             <p class="display-4  " style="float:right;">{{Datas[0]}}
-                <fa-icon [icon]="faCheckCircle"></fa-icon>
+                <fa-icon [icon]="faUserPlus"></fa-icon>
                 {{Datas[1]}}
                 <fa-icon [icon]="faChartLine" (click)="loadChart()"></fa-icon>
             </p>
@@ -38,6 +38,16 @@
             <template #deadchartcontainer></template>
         </div>
 
+        <div class=" jumbotron alert alert-success">
+
+            <h3 class="display-4 " style="float:right;">{{RecoveredDatas[0]}}
+                <fa-icon [icon]=" faUserCheck "></fa-icon>
+                {{RecoveredDatas[1]}}
+                <fa-icon [icon]="faChartLine " (click)="loadRecoveredChart() "></fa-icon>
+            </h3>
+            <p class="lead ">Total recovered cases as of today and number of recoverey increased from the previous day </p>
+            <template #recoveredchartcontainer></template>
+        </div>
         <app-table-pagination></app-table-pagination>
         <!-- <table class="table table-striped ">
             <tr>

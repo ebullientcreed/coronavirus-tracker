@@ -19,6 +19,12 @@ export class CoronaDataService {
   public getCountryDeathData(){
     return this.http.get("http://localhost:8080/getCountryDeathData");
   }
+  public getRecoveredData(){
+    return this.http.get("http://localhost:8080/getRecoveryData");
+  }
+  public getCountryRecoveredData(){
+    return this.http.get("http://localhost:8080/getCountryRecoveredData");
+  }
   public getResult(){
     return this.http.get("http://localhost:8080/getResult");
   }
@@ -27,5 +33,8 @@ export class CoronaDataService {
   }
   public getTimeSeriesDeadResult(){
     return this.http.get("http://localhost:8080/getTimeDeathCases");
+  }
+  public getTimeSeriesRecoveredResult(){
+    return this.http.get("http://localhost:8080/getTimeRecoveredCases");
   }
 }

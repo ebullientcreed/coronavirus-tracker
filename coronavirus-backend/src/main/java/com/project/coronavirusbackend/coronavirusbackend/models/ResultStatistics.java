@@ -5,6 +5,13 @@ public class ResultStatistics {
 	private String country;
 	private int latestTotalCases;
 	private int latestTotalDeathCases;
+	private int latestRecoveredCases;
+	public int getLatestRecoveredCases() {
+		return latestRecoveredCases;
+	}
+	public void setLatestRecoveredCases(int latestRecoveredCases) {
+		this.latestRecoveredCases = latestRecoveredCases;
+	}
 	public int getNumber() {
 		return number;
 	}

@@ -9,7 +9,7 @@ import { MatSort } from '@angular/material/sort';
   styleUrls: ['./table-pagination.component.css']
 })
 export class TablePaginationComponent implements OnInit {
-  displayedColumns: string[] = ['country', 'latestTotalCases', 'latestTotalDeathCases'];
+  displayedColumns: string[] = ['country', 'latestTotalCases', 'latestTotalDeathCases', 'latestRecoveredCases'];
   Result:any;
   nameList:any;
   dataList:any;

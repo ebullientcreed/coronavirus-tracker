@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.coronavirusbackend.coronavirusbackend.models.ChartData;
 import com.project.coronavirusbackend.coronavirusbackend.models.CountryStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.models.LocationStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.RecoveredCountryStatistics;
+import com.project.coronavirusbackend.coronavirusbackend.models.RecoveredLocationStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.models.DeathCountryStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.models.DeathLocationStatistics;
 import com.project.coronavirusbackend.coronavirusbackend.models.ResultStatistics;
@@ -54,7 +56,7 @@ public class HomeController {
 		//resultList.add(coronaDataService.getAllStatList());
 		resultList.add(totalCases);
 		resultList.add(totalPrevCases);
-		resultList.add(coronaDataService.getAllCountryStat());
+		resultList.add(coronaDataService.getAllDeathCountryStat());
 		return resultList;
 	}
 	@GetMapping("/getCountryDeathData")
@@ -62,6 +64,26 @@ public class HomeController {
 	public List<DeathCountryStatistics> countryDeathData(Model model){
 		List<DeathCountryStatistics> resultList=new ArrayList<DeathCountryStatistics>();		
 		resultList.addAll(coronaDataService.getAllDeathCountryStat());
+		return resultList;
+	}
+	@GetMapping("/getRecoveryData")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public List<Object> recoverdData(){
+		List<Object> resultList=new ArrayList<Object>();
+		List<RecoveredLocationStatistics> allTotal=coronaDataService.getAllRecoveredStatList();
+		int totalCases=allTotal.stream().mapToInt(stat->stat.getLatestTotalCases()).sum();
+		int totalPrevCases=allTotal.stream().mapToInt(stat->stat.getChangeFromPrevDay()).sum();
+		//resultList.add(coronaDataService.getAllStatList());
+		resultList.add(totalCases);
+		resultList.add(totalPrevCases);
+		resultList.add(coronaDataService.getAllRecoveredCountryStat());
+		return resultList;
+	}
+	@GetMapping("/getCountryRecoveredData")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public List<RecoveredCountryStatistics> countryRecoverdData(){
+		List<RecoveredCountryStatistics> resultList=new ArrayList<RecoveredCountryStatistics>();		
+		resultList.addAll(coronaDataService.getAllRecoveredCountryStat());
 		return resultList;
 	}
 	@GetMapping("/getResult")
@@ -88,6 +110,19 @@ public class HomeController {
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<ChartData> deathTimeData(){
 		HashMap<String, Integer> map=coronaDataService.getDeadTimeData();
+		List<ChartData> res=new ArrayList<>();
+		for(String date:map.keySet()) {
+			ChartData cd=new ChartData();
+			cd.setLabel(date);
+			cd.setValue(String.valueOf(map.get(date)));
+			res.add(cd);
+		}
+		return res;
+	}
+	@GetMapping("/getTimeRecoveredCases")
+	@CrossOrigin(origins = "http://localhost:4200")
+	public List<ChartData> recoveredTimeData(){
+		HashMap<String, Integer> map=coronaDataService.getRecoveredTimeData();
 		List<ChartData> res=new ArrayList<>();
 		for(String date:map.keySet()) {
 			ChartData cd=new ChartData();

@@ -19,6 +19,7 @@ import * as charts from "fusioncharts/fusioncharts.charts";
 import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import { ChartViewConfirmedComponent } from './chart-view-confirmed/chart-view-confirmed.component';
 import { ChartViewDeadComponent } from './chart-view-dead/chart-view-dead.component';
+import { ChartViewRecoveredComponent } from './chart-view-recovered/chart-view-recovered.component';
 import { CoronaFooterComponent } from './corona-footer/corona-footer.component';
 FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
 @NgModule({
@@ -28,6 +29,7 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
     TablePaginationComponent,
     ChartViewConfirmedComponent,
     ChartViewDeadComponent,
+    ChartViewRecoveredComponent,
     CoronaFooterComponent
   ],
   imports: [
@@ -45,6 +47,6 @@ FusionChartsModule.fcRoot(FusionCharts, charts, FusionTheme);
   ],
   providers: [CoronaDataService],
   bootstrap: [AppComponent],
-  entryComponents: [ChartViewConfirmedComponent,ChartViewDeadComponent]
+  entryComponents: [ChartViewConfirmedComponent,ChartViewDeadComponent,ChartViewRecoveredComponent]
 })
 export class AppModule { }
