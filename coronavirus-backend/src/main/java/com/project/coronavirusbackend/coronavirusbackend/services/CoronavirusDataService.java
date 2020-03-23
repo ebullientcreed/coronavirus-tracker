@@ -103,6 +103,7 @@ public class CoronavirusDataService {
 	}	
 	//Execute after the creation of service, after instance of class run this method
 	@PostConstruct
+	//Runs on 1st hour of every day
 	//Run of method on regular basis, it runs on every second by setting cron variable as below
 	//second minute hr . . .
 	@Scheduled(cron="* * 1 * * *")
