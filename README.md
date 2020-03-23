@@ -1,6 +1,6 @@
 # Coronavirus-tracker
-A coronavirus tracker. It is a portal which shows the number of cases of coronavirus worldwide.
-Note that the data is taken from the data repository https://github.com/CSSEGISandData/COVID-19.
+Coronavirus is a rapidly spreading outbreak and a pandemic. This coronavirus tracker helps display the number of confirmed cases, the number of deaths and the details of countries affected globally. Not having to go through a lot of options this tracker makes it easy by providing information of the results monitored timely in an elaborate way from the data repository.
+Note that the data is taken from the data repository by by the Johns Hopkins University Center for Systems Science and Engineering https://github.com/CSSEGISandData/COVID-19.
 This application is made using Angular8 in the frontend and Spring Boot2 in the backend.
 ![Springboot-Angular](images/springboot-angular.png)
 # Spring Boot App
@@ -18,3 +18,13 @@ This installs most of the modules, but configuring this angular app requires ins
    - npm install @fortawesome/free-solid-svg-icons
    - npm install @fortawesome/angular-fontawesome
    - npm install @fortawesome/fontawesome-svg-core
+
+# References
+- https://github.com/CSSEGISandData/COVID-19
+- https://www.fusioncharts.com
+- https://material.angular.io
+- https://commons.apache.org
+- https://getbootstrap.com/
+- https://junit.org/junit5/docs/current/user-guide/
+- https://www.youtube.com/
+- https://fontawesome.com/how-to-use/on-the-web/using-with/angular
