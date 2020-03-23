@@ -7,7 +7,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,6 +21,8 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 //making this as a spring service
@@ -101,6 +105,11 @@ public class CoronavirusDataService {
 	public HashMap<String, Integer> getDeadTimeData() {
 		return deadTimeData;
 	}	
+
+	private static final Logger log = LoggerFactory.getLogger(CoronavirusDataService.class);
+
+	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+
 	//Execute after the creation of service, after instance of class run this method
 	@PostConstruct
 	//Runs on 1st hour of every day
@@ -108,11 +117,13 @@ public class CoronavirusDataService {
 	//second minute hr . . .
 	@Scheduled(cron="* * 1 * * *")
 	public void fetchCoronaData() throws NumberFormatException,IOException, InterruptedException {
-		//create http client
-		//and use http request to build builderpattern providing location
+		//logging the time for each schedule
+		log.info("The time is now {}", dateFormat.format(new Date()));
 		List<LocationStatistics> newStatList=new ArrayList<>();
 		TreeMap<String,Integer> newCountryStatMap=new TreeMap<>();
 		HashMap<String,Integer> newTimeData=new LinkedHashMap<>();		
+		//create http client
+		//and use http request to build builderpattern providing location
 		HttpClient client=HttpClient.newHttpClient();
 		HttpRequest request=HttpRequest.newBuilder()
 				.uri(URI.create(rawDataUrl))
