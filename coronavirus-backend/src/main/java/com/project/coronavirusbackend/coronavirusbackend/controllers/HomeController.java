@@ -26,6 +26,7 @@ import com.project.coronavirusbackend.coronavirusbackend.services.CoronavirusDat
 public class HomeController {
 	@Autowired
 	CoronavirusDataService coronaDataService;
+	
 	@GetMapping("/getData")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<Object> getData(){

@@ -10,18 +10,21 @@
 <body>
     <div class="container">
         <div>
-            <h1 class="display-2 headtitle ">Coronavirus Tracker
-                <fa-icon [icon]="faFileMedical"></fa-icon>
+            <h1 class="display-4 headtitle ">Coronavirus Tracker
+                <fa-icon [icon]="faFileMedical" (click)="loadAllChart()"></fa-icon>
             </h1>
             <p class="lead " style="text-align: center;">This application lists the current number of confirmed and death cases across the globe </p>
+            <template #allchartcontainer></template>
         </div>
+        <div>
 
+        </div>
         <div class=" jumbotron alert alert-warning">
-            <p class="display-4  " style="float:right;">{{Datas[0]}}
+            <h2 class="display-5 " style="float:right;">{{Datas[0]}}
                 <fa-icon [icon]="faUserPlus"></fa-icon>
                 {{Datas[1]}}
                 <fa-icon [icon]="faChartLine" (click)="loadChart()"></fa-icon>
-            </p>
+            </h2>
             <p class="lead ">Total confirmed cases as of today and number of cases increased from previous day </p>
             <template #chartcontainer></template>
         </div>
@@ -29,25 +32,26 @@
 
         <div class=" jumbotron alert alert-danger">
 
-            <h3 class="display-4 " style="float:right;">{{DeathDatas[0]}}
+            <h2 class="display-5 " style="float:right;">{{DeathDatas[0]}}
                 <fa-icon [icon]=" faUserSlash "></fa-icon>
                 {{DeathDatas[1]}}
                 <fa-icon [icon]="faChartLine " (click)="loadDeadChart() "></fa-icon>
-            </h3>
+            </h2>
             <p class="lead ">Total death cases as of today and number of cases increased from the previous day </p>
             <template #deadchartcontainer></template>
         </div>
 
         <div class=" jumbotron alert alert-success">
 
-            <h3 class="display-4 " style="float:right;">{{RecoveredDatas[0]}}
+            <h2 class="display-5 " style="float:right;">{{RecoveredDatas[0]}}
                 <fa-icon [icon]=" faUserCheck "></fa-icon>
                 {{RecoveredDatas[1]}}
                 <fa-icon [icon]="faChartLine " (click)="loadRecoveredChart() "></fa-icon>
-            </h3>
+            </h2>
             <p class="lead ">Total recovered cases as of today and number of recoverey increased from the previous day </p>
             <template #recoveredchartcontainer></template>
         </div>
+
         <app-table-pagination></app-table-pagination>
         <!-- <table class="table table-striped ">
             <tr>

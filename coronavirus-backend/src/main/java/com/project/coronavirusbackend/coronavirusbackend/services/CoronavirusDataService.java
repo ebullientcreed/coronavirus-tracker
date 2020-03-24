@@ -23,6 +23,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.asm.RecordComponentVisitor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 //making this as a spring service
@@ -41,7 +42,7 @@ import com.project.coronavirusbackend.coronavirusbackend.models.TimeSeriesData;
 public class CoronavirusDataService {	
 	private String rawDataUrl="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv";
 	private String rawDataDeathUrl= "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv";
-	private String rawDataRecoverdUrl="https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv";
+	private String rawDataRecoverdUrl= "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Recovered.csv";
 	private  List<LocationStatistics> allStatList=new ArrayList<>();
 	private  List<CountryStatistics> allCountryStat=new ArrayList<>();
 	private  List<DeathLocationStatistics> allDeathStatList=new ArrayList<>();
@@ -106,19 +107,19 @@ public class CoronavirusDataService {
 		return deadTimeData;
 	}	
 
-	private static final Logger log = LoggerFactory.getLogger(CoronavirusDataService.class);
+	//private static final Logger log = LoggerFactory.getLogger(CoronavirusDataService.class);
 
 	private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
 	//Execute after the creation of service, after instance of class run this method
 	@PostConstruct
 	//Runs on 1st hour of every day
-	//Run of method on regular basis, it runs on every second by setting cron variable as below
+	//Running the method on regular basis as a daemon process, it runs on every second by setting cron variable as below
 	//second minute hr . . .
 	@Scheduled(cron="* * 1 * * *")
 	public void fetchCoronaData() throws NumberFormatException,IOException, InterruptedException {
 		//logging the time for each schedule
-		log.info("The time is now {}", dateFormat.format(new Date()));
+		//log.info("The time is now {}", dateFormat.format(new Date()));
 		List<LocationStatistics> newStatList=new ArrayList<>();
 		TreeMap<String,Integer> newCountryStatMap=new TreeMap<>();
 		HashMap<String,Integer> newTimeData=new LinkedHashMap<>();		
@@ -146,18 +147,26 @@ public class CoronavirusDataService {
 		for(int j=(headers.size()-31);j<headers.size();j++) {
 			newTimeData.put(heads[j],0);
 		}		
-		for (CSVRecord record : records) {
+		for(CSVRecord record:records) {
 			//for each record updating the value for each dates
+			//System.out.println(record);
 			for(int k=(record.size()-31);k<record.size();k++) {
-				newTimeData.put(heads[k],newTimeData.getOrDefault(heads[k],0)+Integer.parseInt(record.get(k)));
+				if(!record.get(k).trim().equals("")) {
+					newTimeData.put(heads[k],newTimeData.getOrDefault(heads[k],0)+Integer.parseInt(record.get(k).trim()));
+				}
 			}
 			//Creating an object of locationstatistics class
 			LocationStatistics locStat=new LocationStatistics();
 			//setting the values from record datas
 		    locStat.setState(record.get("Province/State"));
-		    locStat.setCountry(record.get("Country/Region"));		    
-		    int latestCases=Integer.parseInt(record.get(record.size()-1));
-		    int prevDayCases=Integer.parseInt(record.get(record.size()-2));
+		    locStat.setCountry(record.get("Country/Region"));	
+		    int latestCases=0,prevDayCases=0;
+		    if(!record.get(record.size()-1).trim().equals("")) {
+		    	latestCases=Integer.parseInt(record.get(record.size()-1).trim());
+		    }
+		    if(!record.get(record.size()-1).trim().equals("")) {
+		    	prevDayCases=Integer.parseInt(record.get(record.size()-2).trim());
+		    }		    
 		    locStat.setLatestTotalCases(latestCases);
 		    locStat.setChangeFromPrevDay(latestCases-prevDayCases);
 		    newStatList.add(locStat);
@@ -211,14 +220,22 @@ public class CoronavirusDataService {
 		for (CSVRecord record : records) {
 			//for each record updating the value for each dates
 			for(int k=(record.size()-31);k<record.size();k++) {
-				newdeadTimeData.put(heads[k],newdeadTimeData.getOrDefault(heads[k],0)+Integer.parseInt(record.get(k)));
-			}//Creating an object of deathLocationStatistics class
+				if(!record.get(k).trim().equals("")) {
+					newdeadTimeData.put(heads[k],newdeadTimeData.getOrDefault(heads[k],0)+Integer.parseInt(record.get(k).trim()));
+				}
+			}
+			//Creating an object of deathLocationStatistics class
 			//and setting the values from record datas
 			DeathLocationStatistics locStat=new DeathLocationStatistics();
 		    locStat.setState(record.get("Province/State"));
-		    locStat.setCountry(record.get("Country/Region"));		    
-		    int latestCases=Integer.parseInt(record.get(record.size()-1));
-		    int prevDayCases=Integer.parseInt(record.get(record.size()-2));
+		    locStat.setCountry(record.get("Country/Region"));
+		    int latestCases=0,prevDayCases=0;
+		    if(!record.get(record.size()-1).trim().equals("")) {
+		    	latestCases=Integer.parseInt(record.get(record.size()-1).trim());
+		    }
+		    if(!record.get(record.size()-1).trim().equals("")) {
+		    	prevDayCases=Integer.parseInt(record.get(record.size()-2).trim());
+		    }		   
 		    locStat.setLatestTotalCases(latestCases);
 		    locStat.setChangeFromPrevDay(latestCases-prevDayCases);
 		    newStatList.add(locStat);
@@ -267,14 +284,21 @@ public class CoronavirusDataService {
 				for (CSVRecord record : records) {
 					//for each record updating the value for each dates
 					for(int k=(record.size()-31);k<record.size();k++) {
-						newRecoveredTimeData.put(heads[k],newRecoveredTimeData.getOrDefault(heads[k],0)+Integer.parseInt(record.get(k)));
+						if(!record.get(k).trim().equals("")) {
+							newRecoveredTimeData.put(heads[k],newRecoveredTimeData.getOrDefault(heads[k],0)+Integer.parseInt(record.get(k).trim()));
+						}	
 					}//Creating an object of deathLocationStatistics class
 					//and setting the values from record datas
 					RecoveredLocationStatistics locStat=new RecoveredLocationStatistics();
 				    locStat.setState(record.get("Province/State"));
 				    locStat.setCountry(record.get("Country/Region"));		    
-				    int latestCases=Integer.parseInt(record.get(record.size()-1));
-				    int prevDayCases=Integer.parseInt(record.get(record.size()-2));
+				    int latestCases=0,prevDayCases=0;
+				    if(!record.get(record.size()-1).trim().equals("")) {
+				    	latestCases=Integer.parseInt(record.get(record.size()-1).trim());
+				    }
+				    if(!record.get(record.size()-1).trim().equals("")) {
+				    	prevDayCases=Integer.parseInt(record.get(record.size()-2).trim());
+				    }		   
 				    locStat.setLatestTotalCases(latestCases);
 				    locStat.setChangeFromPrevDay(latestCases-prevDayCases);
 				    newStatList.add(locStat);

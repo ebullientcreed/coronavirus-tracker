@@ -10,6 +10,7 @@ import * as FusionTheme from "fusioncharts/themes/fusioncharts.theme.fusion";
 import { ChartViewConfirmedComponent } from '../chart-view-confirmed/chart-view-confirmed.component';
 import { ChartViewDeadComponent } from '../chart-view-dead/chart-view-dead.component';
 import { ChartViewRecoveredComponent } from '../chart-view-recovered/chart-view-recovered.component';
+import { ChartViewAllComponent } from '../chart-view-all/chart-view-all.component';
 import { NONE_TYPE } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-viewdata',
@@ -21,13 +22,14 @@ export class ViewdataComponent implements OnInit {
   Result: any;
   DeathDatas: any;
   RecoveredDatas: any;
-  flag= true;deadflag= true;recoveredFlag=true;
+  allFlag=true;flag= true;deadflag= true;recoveredFlag=true;
   faFileMedical=faFileMedical;faUserPlus=faUserPlus;
   faUserSlash=faUserSlash;faChartLine=faChartLine;faUserCheck=faUserCheck;
   componentRef: any;
   @ViewChild('chartcontainer', { read: ViewContainerRef, static:true}) confirmedEntry: ViewContainerRef;
   @ViewChild('deadchartcontainer', { read: ViewContainerRef, static:true}) deadEntry: ViewContainerRef;
   @ViewChild('recoveredchartcontainer', { read: ViewContainerRef, static:true}) recoveredEntry: ViewContainerRef;
+  @ViewChild('allchartcontainer', { read: ViewContainerRef, static:true}) allEntry: ViewContainerRef;
   constructor(private service:CoronaDataService, private resolver: ComponentFactoryResolver) { }
   
   ngOnInit() {
@@ -48,6 +50,18 @@ export class ViewdataComponent implements OnInit {
       this.Result=data;
     }); 
     
+   }
+   loadAllChart(){
+    if(!this.allFlag){     
+      this.allEntry.clear();
+      this.allFlag =true;
+    }
+    else{
+      this.confirmedEntry.clear();
+      const factory = this.resolver.resolveComponentFactory(ChartViewAllComponent);
+      this.componentRef = this.allEntry.createComponent(factory);
+      if(this.allFlag==true) this.allFlag =false;
+    } 
    }
   loadChart() {   
    // console.log("clicked"); 
