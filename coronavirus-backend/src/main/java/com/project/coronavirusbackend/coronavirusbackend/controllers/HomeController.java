@@ -27,7 +27,7 @@ public class HomeController {
 	@Autowired
 	CoronavirusDataService coronaDataService;
 	
-	@GetMapping("/getData")
+	@GetMapping("/confirmedData")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<Object> getData(){
 		List<Object> resultList=new ArrayList<Object>();
@@ -40,14 +40,14 @@ public class HomeController {
 		resultList.add(coronaDataService.getAllCountryStat());
 		return resultList;
 	}
-	@GetMapping("/getCountryData")
+	@GetMapping("/countryData")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<CountryStatistics> countryData(Model model){
 		List<CountryStatistics> resultList=new ArrayList<CountryStatistics>();		
 		resultList.addAll(coronaDataService.getAllCountryStat());
 		return resultList;
 	}
-	@GetMapping("/getDeathData")
+	@GetMapping("/deathData")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<Object> getDeathData(){
 		List<Object> resultList=new ArrayList<Object>();
@@ -60,14 +60,14 @@ public class HomeController {
 		resultList.add(coronaDataService.getAllDeathCountryStat());
 		return resultList;
 	}
-	@GetMapping("/getCountryDeathData")
+	@GetMapping("/countryDeathData")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<DeathCountryStatistics> countryDeathData(Model model){
 		List<DeathCountryStatistics> resultList=new ArrayList<DeathCountryStatistics>();		
 		resultList.addAll(coronaDataService.getAllDeathCountryStat());
 		return resultList;
 	}
-	@GetMapping("/getRecoveryData")
+	@GetMapping("/recoveryData")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<Object> recoverdData(){
 		List<Object> resultList=new ArrayList<Object>();
@@ -80,21 +80,21 @@ public class HomeController {
 		resultList.add(coronaDataService.getAllRecoveredCountryStat());
 		return resultList;
 	}
-	@GetMapping("/getCountryRecoveredData")
+	@GetMapping("/countryRecoveredData")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<RecoveredCountryStatistics> countryRecoverdData(){
 		List<RecoveredCountryStatistics> resultList=new ArrayList<RecoveredCountryStatistics>();		
 		resultList.addAll(coronaDataService.getAllRecoveredCountryStat());
 		return resultList;
 	}
-	@GetMapping("/getResult")
+	@GetMapping("/result")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<ResultStatistics> resultData(){
 		List<ResultStatistics> resultList=new ArrayList<ResultStatistics>();		
 		resultList.addAll(coronaDataService.getresultCountry());
 		return resultList;
 	}
-	@GetMapping("/getTimeConfirmedCases")
+	@GetMapping("/timeConfirmedCases")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<ChartData> confirmedTimeData(){
 		HashMap<String, Integer> map=coronaDataService.getConfirmedTimeData();
@@ -107,7 +107,7 @@ public class HomeController {
 		}
 		return res;
 	}
-	@GetMapping("/getTimeDeathCases")
+	@GetMapping("/timeDeathCases")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<ChartData> deathTimeData(){
 		HashMap<String, Integer> map=coronaDataService.getDeadTimeData();
@@ -120,7 +120,7 @@ public class HomeController {
 		}
 		return res;
 	}
-	@GetMapping("/getTimeRecoveredCases")
+	@GetMapping("/timeRecoveredCases")
 	@CrossOrigin(origins = "http://localhost:4200")
 	public List<ChartData> recoveredTimeData(){
 		HashMap<String, Integer> map=coronaDataService.getRecoveredTimeData();
